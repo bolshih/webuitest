@@ -69,7 +69,7 @@ public class WebUiTests {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
         form.$("[data-test-id=name] input").setValue("Сергей Петров-Скворцов");
-        form.$("[data-test-id=phone] input").setValue("+77653984367");
+        form.$("[data-test-id=phone] input").setValue("+77653984369");
         form.$(".button").click();
         form.$("[data-test-id=agreement]").shouldHave(Condition.cssClass("input_invalid"));
     }
