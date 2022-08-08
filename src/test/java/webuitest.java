@@ -5,14 +5,15 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-public class webuitest {
+
+public class Webuitest {
 
 
     @Test
-    void shouldTestWebUiValidValue(){
+    void shouldTestWebUiValidValue() {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
-        form.$("[data-test-id=name] input").setValue("Сергей Петров");
+        form.$("[data-test-id=name] input").setValue("Сергей Петров-Скворцов");
         form.$("[data-test-id=phone] input").setValue("+77653984367");
         form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
@@ -20,29 +21,54 @@ public class webuitest {
     }
 
     @Test
-    void shouldTestWebUiInvalidName(){
+    void shouldTestWebUiInvalidName() {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
         form.$("[data-test-id=name] input").setValue("Sergei Petrov");
+        form.$("[data-test-id=phone] input").setValue("+77653984367");
+        form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
-        form.$("[data-test-id=name]").shouldHave(Condition.cssClass("input_invalid"));
+        form.$("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
     @Test
-    void shouldTestWebUiInvalidPhone(){
+    void shouldTestWebUiEmptyName() {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
-        form.$("[data-test-id=name] input").setValue("Сергей Петров");
+        form.$("[data-test-id=name] input").setValue("");
+        form.$("[data-test-id=phone] input").setValue("+77653984367");
+        form.$("[data-test-id=agreement]").click();
+        form.$(".button").click();
+        form.$("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
+
+    @Test
+    void shouldTestWebUiInvalidPhone() {
+        open("http://localhost:9999");
+        SelenideElement form = $(".form");
+        form.$("[data-test-id=name] input").setValue("Сергей Петров-Скворцов");
         form.$("[data-test-id=phone] input").setValue("+723489");
+        form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
-        form.$("[data-test-id=phone]").shouldHave(Condition.cssClass("input_invalid"));
+        form.$("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     @Test
-    void shouldTestWebUiCheckBox(){
+    void shouldTestWebUiEmptyPhone() {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
-        form.$("[data-test-id=name] input").setValue("Сергей Петров");
+        form.$("[data-test-id=name] input").setValue("Сергей Петров-Скворцов");
+        form.$("[data-test-id=phone] input").setValue("");
+        form.$("[data-test-id=agreement]").click();
+        form.$(".button").click();
+        form.$("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
+
+    @Test
+    void shouldTestWebUiCheckBox() {
+        open("http://localhost:9999");
+        SelenideElement form = $(".form");
+        form.$("[data-test-id=name] input").setValue("Сергей Петров-Скворцов");
         form.$("[data-test-id=phone] input").setValue("+77653984367");
         form.$(".button").click();
         form.$("[data-test-id=agreement]").shouldHave(Condition.cssClass("input_invalid"));
