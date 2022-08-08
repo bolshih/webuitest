@@ -37,4 +37,14 @@ public class webuitest {
         form.$(".button").click();
         form.$("[data-test-id=phone]").shouldHave(Condition.cssClass("input_invalid"));
     }
+
+    @Test
+    void shouldTestWebUiCheckBox(){
+        open("http://localhost:9999");
+        SelenideElement form = $(".form");
+        form.$("[data-test-id=name] input").setValue("Сергей Петров");
+        form.$("[data-test-id=phone] input").setValue("+77653984367");
+        form.$(".button").click();
+        form.$("[data-test-id=agreement]").shouldHave(Condition.cssClass("input_invalid"));
+    }
 }
