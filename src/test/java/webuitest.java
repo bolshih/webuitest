@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 public class webuitest {
 
+
     @Test
     void shouldTestWebUiValidValue(){
         open("http://localhost:9999");
@@ -25,5 +26,15 @@ public class webuitest {
         form.$("[data-test-id=name] input").setValue("Sergei Petrov");
         form.$(".button").click();
         form.$("[data-test-id=name]").shouldHave(Condition.cssClass("input_invalid"));
+    }
+
+    @Test
+    void shouldTestWebUiInvalidPhone(){
+        open("http://localhost:9999");
+        SelenideElement form = $(".form");
+        form.$("[data-test-id=name] input").setValue("Сергей Петров");
+        form.$("[data-test-id=phone] input").setValue("+723489");
+        form.$(".button").click();
+        form.$("[data-test-id=phone]").shouldHave(Condition.cssClass("input_invalid"));
     }
 }
