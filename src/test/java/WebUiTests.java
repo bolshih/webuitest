@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class Webuitest {
+public class WebUiTests {
 
 
     @Test
